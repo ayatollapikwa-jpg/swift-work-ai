@@ -1,15 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
-import { generateText } from "ai";
 import { z } from "zod";
 
 const MODEL = "google/gemini-2.5-flash";
 
-function getModel() {
+async function getModel() {
   const key = process.env.LOVABLE_API_KEY;
   if (!key) throw new Error("Missing LOVABLE_API_KEY");
-  // Dynamic import to avoid shipping server code to the client bundle.
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { createLovableAiGatewayProvider } = require("./ai-gateway.server") as typeof import("./ai-gateway.server");
+  const { createLovableAiGatewayProvider } = await import("./ai-gateway.server");
   const gateway = createLovableAiGatewayProvider(key);
   return gateway(MODEL);
 }
@@ -25,7 +22,8 @@ const EmailInput = z.object({
 export const generateEmail = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => EmailInput.parse(input))
   .handler(async ({ data }) => {
-    const model = getModel();
+    const { generateText } = await import("ai");
+    const model = await getModel();
     const { text } = await generateText({
       model,
       system:
@@ -47,7 +45,8 @@ const ResearchInput = z.object({
 export const generateResearch = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => ResearchInput.parse(input))
   .handler(async ({ data }) => {
-    const model = getModel();
+    const { generateText } = await import("ai");
+    const model = await getModel();
     const levelHint =
       data.level === "Quick"
         ? "Provide a concise overview of the main points."
@@ -80,7 +79,8 @@ const ChatInput = z.object({
 export const chatReply = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => ChatInput.parse(input))
   .handler(async ({ data }) => {
-    const model = getModel();
+    const { generateText } = await import("ai");
+    const model = await getModel();
     const { text } = await generateText({
       model,
       system:
