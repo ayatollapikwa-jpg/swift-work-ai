@@ -91,10 +91,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Draft emails, summarize research, and chat with AI for workplace tasks — no account required.",
+          "Privacy-first AI tools for emails, research summaries, and workplace questions. No account, no sign-in, no data stored.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "AI Workplace Productivity Assistant" },
+      { name: "twitter:description", content: "Privacy-first AI tools for emails, research summaries, and workplace questions. No account, no sign-in, no data stored." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2ecde68b-f1ff-4882-a17f-3de04bd5b720/id-preview-d4938356--4386e92e-6b74-489f-9aac-95f226c1c203.lovable.app-1783679045142.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2ecde68b-f1ff-4882-a17f-3de04bd5b720/id-preview-d4938356--4386e92e-6b74-489f-9aac-95f226c1c203.lovable.app-1783679045142.png" },
     ],
     links: [
       {
